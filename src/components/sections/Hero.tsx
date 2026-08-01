@@ -24,8 +24,8 @@ const Hero: React.FC = () => {
   const name = data.displayName || 'Your Name'
   const title = data.heroTitle || 'Full Stack Developer'
   const tagline = data.heroTagline || 'I build scalable, production-ready web applications with modern technologies. Passionate about clean code, great UX, and continuous learning.'
-  const githubUrl = data.githubUrl || '#'
-  const linkedinUrl = data.linkedinUrl || '#'
+ const githubUrl = data.githubUrl || 'https://github.com/Sunilpranav'
+const linkedinUrl = data.linkedinUrl || 'https://www.linkedin.com/in/sunilpranav-s21/'
   const resumeUrl = data.resumeUrl || '/resume.pdf'
   const available = data.availableForWork !== false
 
