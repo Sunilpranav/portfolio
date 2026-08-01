@@ -15,7 +15,7 @@ import {
 } from 'firebase/firestore'
 
 // Helper for timeout so app never hangs on mock / offline credentials
-const withTimeout = <T>(promise: Promise<T>, ms = 3000): Promise<T> => {
+const withTimeout = <T>(promise: Promise<T>, ms = 15000): Promise<T> => {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error('Firebase operation timed out')), ms)
     promise
@@ -53,7 +53,7 @@ export const getCollection = async (collectionName: string, ...constraints: Quer
   try {
     const ref = collection(db, collectionName)
     const q = constraints.length > 0 ? query(ref, ...constraints) : ref
-    const snap = await withTimeout(getDocs(q), 3000)
+    const snap = await withTimeout(getDocs(q), 15000)
     const docs = snap.docs.map(d => ({ id: d.id, ...d.data() }))
     saveLocalCollection(collectionName, docs)
     return docs
@@ -66,7 +66,7 @@ export const getCollection = async (collectionName: string, ...constraints: Quer
 export const getDocument = async (collectionName: string, docId: string) => {
   try {
     const ref = doc(db, collectionName, docId)
-    const snap = await withTimeout(getDoc(ref), 3000)
+    const snap = await withTimeout(getDoc(ref), 15000)
     if (snap.exists()) {
       const data = { id: snap.id, ...snap.data() }
       localStorage.setItem(`portfolio_doc_${collectionName}_${docId}`, JSON.stringify(data))
@@ -86,7 +86,7 @@ export const addDocument = async (collectionName: string, data: Record<string, u
 
   try {
     const ref = collection(db, collectionName)
-    const res = await withTimeout(addDoc(ref, { ...data, createdAt: serverTimestamp(), updatedAt: serverTimestamp() }), 3000)
+    const res = await withTimeout(addDoc(ref, { ...data, createdAt: serverTimestamp(), updatedAt: serverTimestamp() }), 15000)
     payload.id = res.id
   } catch {
     // Fallback
@@ -102,7 +102,7 @@ export const addDocument = async (collectionName: string, data: Record<string, u
 export const updateDocument = async (collectionName: string, docId: string, data: Record<string, unknown>) => {
   try {
     const ref = doc(db, collectionName, docId)
-    await withTimeout(updateDoc(ref, { ...data, updatedAt: serverTimestamp() }), 3000)
+    await withTimeout(updateDoc(ref, { ...data, updatedAt: serverTimestamp() }), 15000)
   } catch {
     // Fallback
   }
@@ -119,7 +119,7 @@ export const updateDocument = async (collectionName: string, docId: string, data
 export const deleteDocument = async (collectionName: string, docId: string) => {
   try {
     const ref = doc(db, collectionName, docId)
-    await withTimeout(deleteDoc(ref), 3000)
+    await withTimeout(deleteDoc(ref), 15000)
   } catch {
     // Fallback
   }
@@ -136,7 +136,7 @@ export const setDocument = async (collectionName: string, docId: string, data: R
 
   try {
     const ref = doc(db, collectionName, docId)
-    await withTimeout(setDoc(ref, { ...data, updatedAt: serverTimestamp() }, { merge: true }), 3000)
+    await withTimeout(setDoc(ref, { ...data, updatedAt: serverTimestamp() }, { merge: true }), 15000)
   } catch {
     // Fallback
   }

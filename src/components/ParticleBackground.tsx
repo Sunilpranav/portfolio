@@ -38,8 +38,8 @@ const ParticleBackground = () => {
         y: Math.random() * window.innerHeight,
         vx: (Math.random() - 0.5) * 0.35,
         vy: (Math.random() - 0.5) * 0.35,
-        size: Math.random() * 2.2 + 0.4,
-        alpha: Math.random() * 0.45 + 0.08,
+        size: Math.random() * 2.8 + 0.8,
+        alpha: Math.random() * 0.55 + 0.35,
         pulseSpeed: Math.random() * 0.02 + 0.005,
         pulseOffset: Math.random() * Math.PI * 2,
       })
@@ -68,7 +68,7 @@ const ParticleBackground = () => {
         // Draw particle
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(99, 102, 241, ${pulsedAlpha})`
+        ctx.fillStyle = `rgba(129, 140, 248, ${pulsedAlpha})`
         ctx.fill()
 
         // Draw connecting lines between nearby particles
@@ -81,7 +81,7 @@ const ParticleBackground = () => {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = `rgba(99, 102, 241, ${0.06 * (1 - dist / 130)})`
+            ctx.strokeStyle = `rgba(129, 140, 248, ${0.12 * (1 - dist / 130)})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }
